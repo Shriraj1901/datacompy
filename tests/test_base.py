@@ -38,6 +38,7 @@ from datacompy.base import (
     render,
     save_html_report,
     temp_column_name,
+    validate_dataframe_names,
     validate_tolerance_parameter,
 )
 
@@ -659,3 +660,13 @@ def test_fixed_width_table_sizes_non_ascii_headers_without_rows():
         "日本  N",
         "----  -",
     ]
+
+
+def test_validate_dataframe_names_accepts_different_names():
+    validate_dataframe_names("df1", "df2")
+    validate_dataframe_names("a", "A")
+
+
+def test_validate_dataframe_names_rejects_identical_names():
+    with pytest.raises(ValueError, match="df1_name and df2_name must be different"):
+        validate_dataframe_names("same", "same")

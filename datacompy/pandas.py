@@ -32,6 +32,7 @@ from datacompy.base import (
     ColumnStat,
     get_column_tolerance,
     temp_column_name,
+    validate_dataframe_names,
     validate_tolerance_parameter,
 )
 from datacompy.comparator import (
@@ -114,6 +115,7 @@ class PandasCompare(BaseCompare):
         cast_column_names_lower: bool = True,
         custom_comparators: List[BaseComparator] | None = None,
     ) -> None:
+        validate_dataframe_names(df1_name, df2_name)
         self.cast_column_names_lower = cast_column_names_lower
         self.custom_comparators = custom_comparators or []
         self._sensitive_columns: List[str] | None = None

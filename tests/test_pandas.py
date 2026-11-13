@@ -2993,3 +2993,10 @@ def test_all_mismatch_column_name_ending_in_match(
     assert output[join_columns[0]].tolist() == [2]
     assert output["amt_df1"].tolist() == [2]
     assert output["amt_df2"].tolist() == [3]
+
+
+def test_identical_dataframe_names_raise():
+    df1 = pd.DataFrame({"a": [1, 2], "b": [1, 2]})
+    df2 = pd.DataFrame({"a": [1, 2], "b": [1, 3]})
+    with pytest.raises(ValueError, match="df1_name and df2_name must be different"):
+        PandasCompare(df1, df2, join_columns="a", df1_name="same", df2_name="same")

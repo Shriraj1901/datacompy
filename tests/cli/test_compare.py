@@ -171,6 +171,13 @@ def test_comparing_a_file_against_itself_gets_distinct_report_labels(
     assert "left_2" in out
 
 
+def test_identical_explicit_dataset_names_exit_two(cli, backend, capsys):
+    assert (
+        cli("--df1-name", "same", "--df2-name", "same", "--backend", backend) == ERROR
+    )
+    assert "df1_name and df2_name must be different" in capsys.readouterr().err
+
+
 # ---------------------------------------------------------------------------
 # Tolerances
 # ---------------------------------------------------------------------------

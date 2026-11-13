@@ -952,3 +952,28 @@ def validate_tolerance_parameter(
         return result
 
     raise TypeError(f"{param_name} must be a float or dictionary")
+
+
+def validate_dataframe_names(df1_name: str, df2_name: str) -> None:
+    """Check that the two dataframe names can tell their columns apart.
+
+    The names are appended to the compared columns (``col_df1`` and ``col_df2``)
+    so the two sides of the join can be told apart. With identical names the
+    suffixed columns collide and the comparison fails with an unrelated error.
+
+    Parameters
+    ----------
+    df1_name : str
+        The name of the first dataframe.
+    df2_name : str
+        The name of the second dataframe.
+
+    Raises
+    ------
+    ValueError
+        If ``df1_name`` and ``df2_name`` are the same.
+    """
+    if df1_name == df2_name:
+        raise ValueError(
+            f"df1_name and df2_name must be different, both are {df1_name!r}"
+        )
